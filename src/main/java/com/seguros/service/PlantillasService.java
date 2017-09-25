@@ -8,15 +8,24 @@ package com.seguros.service;
 import com.google.gson.Gson;
 import com.seguros.model.Campo;
 import com.seguros.model.Plantilla;
+//import com.sun.jersey.core.header.FormDataContentDisposition;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 
 @Path("/plantillas")
 public class PlantillasService {
@@ -64,5 +73,33 @@ public class PlantillasService {
 
         String output = "Jersey say : " + msg;
         return Response.status(200).entity(json).build();
+    }
+    
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream, @FormDataParam("file") FormDataContentDisposition fileDetail) {
+//    public Response uploadFile(
+//            @FormDataParam("file") InputStream uploadedInputStream,
+//            @FormDataParam("file") FormDataContentDisposition fileDetail) {
+//        String fileLocation = "e://" + fileDetail.getFileName();
+//        //saving file  
+//        try {
+//            FileOutputStream out = new FileOutputStream(new File(fileLocation));
+//            int read = 0;
+//            byte[] bytes = new byte[1024];
+//            out = new FileOutputStream(new File(fileLocation));
+//            while ((read = uploadedInputStream.read(bytes)) != -1) {
+//                out.write(bytes, 0, read);
+//            }
+//            out.flush();
+//            out.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String output = "File successfully uploaded to : " + fileLocation;
+//        return Response.status(200).entity(output).build();
+        return Response.status(200).entity("ok").build();
     }
 }
