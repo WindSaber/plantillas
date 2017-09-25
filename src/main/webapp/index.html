@@ -1,0 +1,86 @@
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <title>Administrador de plantillas</title>
+        <script src="./scripts/angular.min.js"></script>
+        <script src="./scripts/ng-app.js"></script>
+        <style>
+            .w-30{width:30%;  float:left}
+            .w-50{width:50%;  float:left}
+            .w-70{width:70%;  float:left}
+            .w-100{width:100%;  float:left}
+            .tabla thead tr th{font-weight: bold}
+            .tabla {border-collapse: collapse}
+        </style>
+    </head>
+    <body ng-controller="PlantillasCtrl" >
+        <div ng-init="initPlantillas()">
+            <div class="w-50">
+                <div class="w-100">
+                    <div class="w-70">
+                        <h3>Plantillas disponibles</h3>
+                    </div>
+                    <div class="w-30">
+                        <button ng-click="mostrarAgregarPlantilla()">Agregar plantilla</button>
+                    </div>
+                </div>
+                <table class="w-100 tabla" border="1">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Url</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="plantilla in plantillas_actuales"
+                            style="cursor: pointer"
+                            ng-click="seleccionarPlantilla(plantilla)">
+                            <td>{{plantilla.id}}</td>
+                            <td>{{plantilla.nombre}}</td>
+                            <td>{{plantilla.url}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="w-50" ng-show="mostrar_controles_nueva">
+                <h3>Capture por favor los documentos solicitados</h3>
+                <form action="api/files/guardarPlantillas" method="post" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <th>Archivo jxml</th>
+                            <td>
+                                <input type="file"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Archivo jasper</th>
+                            <td>
+                                <input type="file"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button class="w-100" type="submit">Guardar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="w-50" ng-show="plantilla_sel && !mostrar_controles_nueva">
+                <h2>Detalle de la plantilla {{plantilla_sel.nombre}}</h2>
+                <h3>Campos disponibles</h3>
+                <table class="w-100 tabla" border="1">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                    </tr>
+                    <tr ng-repeat="campo in plantilla_sel.campos">
+                        <td>{{campo.id}}</td>
+                        <td>{{campo.nombre}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

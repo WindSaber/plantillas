@@ -1,0 +1,3 @@
+com\seguros\model\Plantilla.class
+com\seguros\model\Campo.class
+com\seguros\service\PlantillasService.class
